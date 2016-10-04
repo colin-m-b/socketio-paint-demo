@@ -21,6 +21,21 @@ io.on('connection', function(socket) {
 	// Display this message in the server console
 	console.log('A user connected!');
 
+	// Send an event named "test" to every client with io.sockets.emit() function (or just io.emit() for short)
+	// and with this event, send the string 'Hey everyone...' as the data
+	io.sockets.emit('test', {user: 'Colin', number: 3});
 
+	// When the server receives an event named "test",
+	socket.on('test', function(data) {
+		// Take whatever data was received and display it in the server console
+
+		console.log(data);
+	});
+
+	socket.on('click', function(data) {
+		console.log(data)
+		socket.emit('test', 'i saw you click');
+		socket.broadcast.emit('test', 'off with their head!')
+	})
 
 });	// End of SocketIO code
